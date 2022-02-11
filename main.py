@@ -17,6 +17,9 @@ quantidade_produto = []
 carrinho_servicos = []
 quantidade_servico = []
 total_carrinho = 0.0
+cartao=[]
+cedulas=[50, 20, 10, 2, 1]
+troco=[]
 
 #Inicialização
 print("*****Loja de Informática*****")
@@ -137,29 +140,32 @@ while True:
                 if(len(carrinho_servicos)!=0 or len(carrinho_produtos)!=0):
                     print('                             Valor total:', total_carrinho) 
                 while True:
-                    opcao=int(input('''1. Deseja ir para a forma de pagamento
-                             2.Limpar o carrinho
-                             3. Voltar'''))
-                    print(opcao)
-                    if(opcao<1 or opcao>3):
+                    opcao=int(input('''
+                    1. Deseja ir para a forma de pagamento
+                    2.Limpar o carrinho
+                    3. Voltar'''))
+                    
+                    if(opcao>=1 or opcao<=3):
                         break
                     
                 if opcao==1:
                     opcao_menu2=4
-                    break
+                    print(opcao)
                     
-                elif opcao_menu2==3:
-                        opcao_menu2=0
-                        break
+                elif opcao==3:
+                    opcao_menu2=0
                     
-                elif opcao_menu2==2:
-                        carrinho_produtos = []
-                        quantidade_produto = []
-                        carrinho_servicos = []
-                        quantidade_servico = []
-                        total_carrinho = 0.0
-                        print('Carrinho limpo')
-                        break
+                    
+                elif opcao==2:
+                    carrinho_produtos = []
+                    quantidade_produto = []
+                    carrinho_servicos = []
+                    quantidade_servico = []
+                    total_carrinho = 0.0
+                    print('Carrinho limpo')
+                    opcao_menu2=0
+                    
+                        
                         
                     
                     
@@ -187,7 +193,36 @@ while True:
                     2. Pix
                     3. Boleto
                     4. Dinheiro
-                    5. Desitir da compra'''))
+                    5. Desitir da compra e limpar o carrinho'''))
+                    if(opcao>=1 and opcao<=5):
+                        break
+                if opcao==1:
+                    print('Informe os dados do cartão de credito')
+                elif opcao ==2:
+                    print('Scanei o QRCode')
+                elif opcao ==3:
+                    print('O codigo barras é XXXXXXXXXXXXX. Vecimento em ')
+                elif opcao ==4:
+                    while True:
+                        pagamento=input(f'O valor total é {total_carrinho}. Informe o valor para calcular o troco')
+                        pagamento=int(pagamento)
+                        if(pagamento>=total_carrinho):
+                            break
+                    pagamento=pagamento-total_carrinho
+                    for i in cedulas:
+                        tr=pagamento//i
+                        pagamento=pagamento%i
+                        troco.append(tr)
+                    for i in range(len(troco)):
+                        if(troco[i]>0):
+                            print(f'O seu troco será {int(troco[i])} cedulas de {cedulas[i]}')
+                    
+                        
+                    
+                    
+                opcao_menu2=0
+                        
+                
                     
                     
                 
@@ -196,7 +231,7 @@ while True:
                  
                 
                                               
-                opcao_menu2=0
+                
                 
                 
                 
