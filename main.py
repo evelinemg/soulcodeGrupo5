@@ -136,7 +136,35 @@ while True:
                     print('Você ainda não adicionou nenhum produto ao carrinho')
                 if(len(carrinho_servicos)!=0 or len(carrinho_produtos)!=0):
                     print('                             Valor total:', total_carrinho) 
-                opcao_menu2=0
+                while True:
+                    opcao=int(input('''1. Deseja ir para a forma de pagamento
+                             2.Limpar o carrinho
+                             3. Voltar'''))
+                    print(opcao)
+                    if(opcao<1 or opcao>3):
+                        break
+                    
+                if opcao==1:
+                    opcao_menu2=4
+                    break
+                    
+                elif opcao_menu2==3:
+                        opcao_menu2=0
+                        break
+                    
+                elif opcao_menu2==2:
+                        carrinho_produtos = []
+                        quantidade_produto = []
+                        carrinho_servicos = []
+                        quantidade_servico = []
+                        total_carrinho = 0.0
+                        print('Carrinho limpo')
+                        break
+                        
+                    
+                    
+                
+                
                 
             elif(opcao_menu2==4):
                 if(len(carrinho_produtos)>0):
@@ -152,7 +180,18 @@ while True:
                 if(len(carrinho_servicos)==0 and len(carrinho_produtos)==0):
                     print('Você ainda não adicionou nenhum produto ao carrinho')
                 if(len(carrinho_servicos)!=0 or len(carrinho_produtos)!=0):
-                    print('                                                    Valor total:', total_carrinho) 
+                    print(f'O valor total é {total_carrinho}')
+                while True:
+                    print('Informe a forma de pagamento')
+                    opcao=int(input('''1. Cartão de Credito ou Crédito
+                    2. Pix
+                    3. Boleto
+                    4. Dinheiro
+                    5. Desitir da compra'''))
+                    
+                    
+                
+                
                 
                  
                 
