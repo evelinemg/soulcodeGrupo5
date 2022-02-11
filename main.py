@@ -29,18 +29,16 @@ print("---------------------------")
 
 while True:
 
-    while True: #Validação do Menu 1
-      
-      #Opções do Menu 1
-      print("A. Acessar")
-      print("F. Finalizar")
-
-      #Variável de acesso ao Menu 2
-      opcao_menu1=input("Digite A para acessar o sistema ou F para finalizar:\n")
-      opcao_menu1 = opcao_menu1.upper()
-
-      if(opcao_menu1=='A'or opcao_menu1=='F'):
+    while True:
+        print("A. Acessar")
+        print("F. Finalizar")
+        opcao_menu1=input("Digite A para acessar o sistema ou F para finalizar:\n")
+        opcao_menu1 = opcao_menu1.upper()
+        if(opcao_menu1=='A' or opcao_menu1=='F'):
+            break
+    if(opcao_menu1=='F'):
         break
+        
         
     #Menu 2
     while(opcao_menu1=='A'):
@@ -65,21 +63,24 @@ while True:
             #Mostra a lista de produtos para o usuário
             if(opcao_menu2==1):
                 print('Lista de produtos:')
-                for i in range(len(produtos)):
+                tamanho=len(produtos)
+                for i in range(tamanho):
                   print(f'{i+1}.{produtos[i]} - R${precos_produtos[i]}') #Mostra na tela os produtos listados e o preço de cada
                 
                 #Validação da escolha do produto
+                t=len(produtos)
                 while True:
-                  escolha = int(input('Escolha o produto pelo índice ou digite 0 para sair:')) #REVER
-                  if(estoque_produtos[escolha-1]==0):
-                        print('Lamentamos, esse produto não está mais disponível')
+                    escolha = int(input('Escolha o produto pelo índice ou digite 0 para sair:')) #REVER
+                    if(escolha>=0 and escolha< t):
                         break
-                  if(escolha < 0 and escolha > len(produtos)):
-                    continue
-                  elif(escolha==0): #Voltar ao Menu 2
+                if(estoque_produtos[escolha-1]==0):
+                    print('Lamentamos, esse produto não está mais disponível')
+                    break
+                    
+                if(escolha==0): #Voltar ao Menu 2
                     opcao_menu2=0
                     break
-                  else: #Entrada dos produtos selecionados (cálculo de preço e quantidade)
+                else: #Entrada dos produtos selecionados (cálculo de preço e quantidade)
                     quantidade = int(input('Informe a quantidade que quer do produto escolhido: '))
                     while True:
                         if(quantidade<=0):
@@ -89,11 +90,11 @@ while True:
                             quantidade = int(input(f'Informe uma quantidade ate {estoque_produtos[escolha-1]}'))
                         else:
                             break
-                    estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
-                    carrinho_produtos.append(escolha-1)
-                    quantidade_produto.append(quantidade)
-                    total_carrinho = total_carrinho + (precos_produtos[escolha-1]*quantidade)
-                    print(f'Subtotal de produtos e serviços: R${total_carrinho}')
+                estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
+                carrinho_produtos.append(escolha-1)
+                quantidade_produto.append(quantidade)
+                total_carrinho = total_carrinho + (precos_produtos[escolha-1]*quantidade)
+                print(f'Subtotal de produtos e serviços: R${total_carrinho}')
             
             #Mostra a lista de serviços para o usuário   
             elif(opcao_menu2==2):
@@ -102,17 +103,17 @@ while True:
                   print(f'{i+1}.{servicos[i]} - R${precos_servicos[i]}')
                 
                 while True:
-                  escolha = int(input('Escolha o produto pelo índice ou digite 0 para sair:')) #REVER
-
-                  if(escolha < 0 and escolha > len(servicos)):
-                    continue
-                  elif(escolha==0): #Voltar ao Menu 2
+                    escolha = int(input('Escolha o produto pelo índice ou digite 0 para sair:'))
+                    if(escolha>=0 and escolha< t):
+                        break
+                    
+                if(escolha==0): #Voltar ao Menu 2
                     opcao_menu2=0
                     break
-                  else: #Entrada dos serviços selecionados (cálculo de preço e quantidade)
-                    
+                
+                else: #Entrada dos serviços selecionados (cálculo de preço e quantidade)
                     carrinho_servicos.append(escolha-1)
-                    quantidade = int(input('Informe a quantidade que quer do produto escolhido: '))
+                    quantidade = int(input('Informe a quantidade que quer serviço escolhido: '))
                     while True:
                         if(quantidade<=0):
                             quantidade = int(input('Digite uma quantidade maior que 0: '))
@@ -167,9 +168,6 @@ while True:
                     
                         
                         
-                    
-                    
-                
                 
                 
             elif(opcao_menu2==4):
@@ -177,7 +175,7 @@ while True:
                     print('Produtos')
                     print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
                     for i in range(len(carrinho_produtos)):
-                        print(i,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]]))
+                        print(i+1,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]]))
                 if(len(carrinho_servicos)>0):
                     print('Serviços')
                     print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
@@ -217,27 +215,12 @@ while True:
                         if(troco[i]>0):
                             print(f'O seu troco será {int(troco[i])} cedulas de {cedulas[i]}')
                     
-                        
-                    
-                    
+
                 opcao_menu2=0
                         
-                
-                    
-                    
-                
-                
-                
-                 
-                
-                                              
-                
-                
-                
-                
-
-            #elif(opcao_menu2==4):  
             elif(opcao_menu2==5):
                 opcao_menu2=0
                 opcao_menu1='F'
                 break 
+                
+print('Obrigado pela preferência')
