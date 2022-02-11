@@ -3,7 +3,7 @@
 #Variavéis: lista de produtos, serviços e preços
 produtos = ('Teclado','Mouse','Memória RAM','Memória HD','Memória SSD','Placa de vídeo','Webcam')
 precos_produtos = (10.0,20.0,30.0,40.0,50.0,60.0,70.0)
-estoque_produtos=(10, 5, 0, 25,  3, 5, 8)
+estoque_produtos=[10, 5, 2, 25,  3, 5, 8]
 
 servicos = ('Manutenção de software','Reparos','Formatação','Montagem','Troca de peças')
 precos_servicos = (10.0,20.0,30.0,40.0,50.0)
@@ -86,6 +86,7 @@ while True:
                             quantidade = int(input(f'Informe uma quantidade ate {estoque_produtos[escolha-1]}'))
                         else:
                             break
+                    estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
                     carrinho_produtos.append(escolha-1)
                     quantidade_produto.append(quantidade)
                     total_carrinho = total_carrinho + (precos_produtos[escolha-1]*quantidade)
