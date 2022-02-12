@@ -38,7 +38,25 @@ while True:
         break
     
     if(opcao_menu1=='F'):
-        print('Valeu')
+        print('Obrigado pela preferência!')
+        if(total_carrinho==0):
+            print("Esperamos por atende-lo melhor na próxima vez")
+        else:
+            print(f'O total gasto foi: {total_carrinho}')
+            if(len(carrinho_produtos)>0):
+                print('Produtos')
+                print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
+                for i in range(len(carrinho_produtos)):
+                    print(i,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]]))
+                
+            if(len(carrinho_servicos)>0):
+                print('Serviços')
+                print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
+                for i in range(len(carrinho_servicos)):
+                    print(i+1,   '     -   ',servicos[carrinho_servicos[i]],'     -     ',quantidade_servico[i], '     -     ',precos_servicos[carrinho_servicos[i]], '     -     ', (quantidade_servico[i]*precos_servicos[carrinho_servicos[i]]))
+                
+            
+            
         break
 
     #Menu 2
@@ -170,7 +188,7 @@ while True:
                 while True:
                     while True:
                       escolha=int(input('Digite o número de sua escolha ou 0 para concluir: '))
-                      if(escolha>=0 and escolha<tamanho_s):
+                      if(escolha>=0 and escolha<=tamanho_s):
                         break
 
                     if(escolha==0): #Voltar ao Menu 2
@@ -216,7 +234,7 @@ while True:
                     while True:
                         print('Você está desistindo da compra dos seguintes produtos')
                         for i in range(len(carrinho_servicos)):
-                            print(f'{servico[carrinho_servicos[i]]}-{quantidade_servico[i]} un.')
+                            print(f'{servicos[carrinho_servicos[i]]}-{quantidade_servico[i]} un.')
                         while True:
                             opcao_desisti=input('Digite S se deseja desistir da compra e N para continuar comprado')
                             opcao_desisti=opcao_desisti.upper()
@@ -238,7 +256,6 @@ while True:
             #Carrinho
             elif(opcao_menu2==3):
                 
-                #Produtos adicionados ao carrinho
                 if(len(carrinho_produtos)>0):
                     print('Produtos')
                     print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
@@ -246,7 +263,7 @@ while True:
                     for i in range(len(carrinho_produtos)):
                         print(i,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]]))
                 
-                #Serviços adicionados ao carrinho
+
                 if(len(carrinho_servicos)>0):
                     print('Serviços')
                     print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
