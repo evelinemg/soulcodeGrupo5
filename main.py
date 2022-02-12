@@ -206,6 +206,7 @@ while True:
                     if(carrinho_servicos.count(escolha-1)>0):
                         pos2=carrinho_servicos.index(escolha-1)
                         quantidade_servico[pos2]=quantidade_servico[pos2]+quantidade
+                        total_carrinho=total_carrinho+(precos_servicos[escolha-1]*quantidade)
                     else: #Atualização do carrinho
                         carrinho_servicos.append(escolha-1)
                         quantidade_servico.append(quantidade)
