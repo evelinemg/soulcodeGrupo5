@@ -181,7 +181,7 @@ while True:
                         quantidade=int(input('Informe a quantidade que quer do produto escolhido: '))
                         while True:
                             if(quantidade<=0):
-                                quantidade_s=int(input('Digite uma quantidade maior que 0: '))
+                                quantidade=int(input('Digite uma quantidade maior que 0: '))
                             else:
                                 break
 
@@ -350,16 +350,20 @@ while True:
                     #Definição do troco
                     pagamento=pagamento-total_carrinho
                     total_troco=pagamento-total_carrinho
+                    print(total_troco)
                     
                     #Verificação do menor número de cédulas para o troco
                     for i in cedulas:
                         tr=pagamento//i
                         pagamento=pagamento%i
                         troco.append(tr)
-
+                        
+                        
+                    a=''
                     for i in range(len(troco)):
                         if(troco[i]>0):
-                            print(f'O seu troco será {total_troco}, disponível em {troco[i]} cedulas de {cedulas[i]}')
+                            a=(str(troco[i])+"X R$ "+str(cedulas[i]))+"\n"+a
+                    print(f'O seu troco será {total_troco}, disponível em {a}')
 
                 #Voltar ao Menu 2     
                 opcao_menu2=0 
