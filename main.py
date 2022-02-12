@@ -83,7 +83,7 @@ while True:
                       escolha=int(input('Digite o número de sua escolha ou 0 para concluir: '))
 
                       #Controle de entrada inválida
-                      if(escolha>=0 and escolha<tamanho_p): 
+                      if(escolha>=0 and escolha<=tamanho_p): 
                           break
 
                     if(estoque_produtos[escolha-1]==0): #Controle de estoque
@@ -210,14 +210,13 @@ while True:
                 #Ir para a finalização da compra
                 if opcao_menu3==1:
                     opcao_menu2=4
-                    print(opcao_menu3) 
                 elif opcao_menu3==3: #Voltar ao Menu 2
                     opcao_menu2=0
                 elif opcao_menu3==2: #Esvaziar o carrinho
                     while True:
                         print('Você está desistindo da compra dos seguintes produtos')
                         for i in range(len(carrinho_servicos)):
-                            print(f'{servico[carrinho_produtos[i]]}-{quantidade_servico[i]} un.')
+                            print(f'{servico[carrinho_servicos[i]]}-{quantidade_servico[i]} un.')
                         while True:
                             opcao_desisti=input('Digite S se deseja desistir da compra e N para continuar comprado')
                             opcao_desisti=opcao_desisti.upper()
@@ -341,16 +340,16 @@ while True:
                     
                     while True:
                         pagamento=input(f'O valor total é {total_carrinho}. Informe o valor de entrada para cálculo do troco:')
-                        pagamento=int(pagamento)
+                        pagamento=float(pagamento)
 
                         #Validação do valor de entrada
                         if(pagamento>=total_carrinho):
                             break
                     
                     #Definição do troco
-                    pagamento=pagamento-total_carrinho
                     total_troco=pagamento-total_carrinho
-                    print(total_troco)
+                    pagamento=pagamento-total_carrinho
+            
                     
                     #Verificação do menor número de cédulas para o troco
                     for i in cedulas:
@@ -362,11 +361,41 @@ while True:
                     a=''
                     for i in range(len(troco)):
                         if(troco[i]>0):
-                            a=(str(troco[i])+"X R$ "+str(cedulas[i]))+"\n"+a
+                            if i<(len(troco)-2):
+                                a=a+(str(troco[i])+"X R$ "+str(cedulas[i]))+", "
+                            else:
+                                a=a+(str(troco[i])+"X R$ "+str(cedulas[i]))
+        
+                            
                     print(f'O seu troco será {total_troco}, disponível em {a}')
-
-                #Voltar ao Menu 2     
-                opcao_menu2=0 
+                    opcao_menu2=0
+                elif opcao_menu4 ==5:
+                    while True:
+                        print('Você está desistindo da compra dos seguintes produtos')
+                        if(len(carrinho_produtos)>0):
+                            for i in range(len(carrinho_produtos)):
+                                print(f'{servicos[carrinho_produtos[i]]}-{quantidade_produto[i]} un.')
+                        if(len(carrinho_servicos)>0):
+                            for i in range(len(carrinho_servicos)):
+                                print(f'{servicos[carrinho_servicos[i]]}-{quantidade_servico[i]} un.')
+                            
+                        while True:
+                            opcao_desisti=input('Digite S se deseja desistir da compra e N para continuar comprado')
+                            opcao_desisti=opcao_desisti.upper()
+                            if(opcao_desisti=='S'or opcao_desisti=='N'):
+                                break
+                        if(opcao_desisti=='S'):
+                            carrinho_servico=[]
+                            quantidade_servico=[]
+                            carrinho_servicos=[]
+                            quantidade_servico=[]
+                            total_carrinho=0.0
+                            print('Carrinho vazio!')
+                            opcao_menu2=0 #Voltar ao Menu 2
+                            break
+                        elif(opcao_desisti=='N'):
+                            opcao_menu2=0
+                            break
                      
             elif(opcao_menu2==5):
                 opcao_menu2=0 #Voltar ao Menu 2
