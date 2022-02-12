@@ -91,12 +91,13 @@ while True:
 
                 if(carrinho_produtos.count(escolha-1)>=1):
                     pos=carrinho_produtos.index(escolha-1)
+                    print(pos, "aqui")
                     quantidade_produto[pos]=quantidade_produto[pos]+quantidade
                 else:
                     estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
                     carrinho_produtos.append(escolha-1)
                     quantidade_produto.append(quantidade)
-                    
+                total_carrinho = total_carrinho + (precos_produtos[escolha-1]*quantidade)
                 print(f'Subtotal de produtos e serviços: R${total_carrinho}')
             
             #Mostra a lista de serviços para o usuário   
