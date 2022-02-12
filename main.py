@@ -7,8 +7,6 @@ estoque_produtos=[10, 5, 2, 25,  3, 5, 8]
 
 servicos = ('Manutenção de software','Reparos','Formatação','Montagem','Troca de peças')
 precos_servicos = (10.0,20.0,30.0,40.0,50.0)
-for i in range(len(servicos)):
-    print(i)
                
 
 #Carrinho do usuário
@@ -68,10 +66,9 @@ while True:
                   print(f'{i+1}.{produtos[i]} - R${precos_produtos[i]}') #Mostra na tela os produtos listados e o preço de cada
                 
                 #Validação da escolha do produto
-                t=len(produtos)
                 while True:
                     escolha = int(input('Escolha o produto pelo índice ou digite 0 para sair:')) #REVER
-                    if(escolha>=0 and escolha< t):
+                    if(escolha>=0 and escolha<len(produtos)):
                         break
                 if(estoque_produtos[escolha-1]==0):
                     print('Lamentamos, esse produto não está mais disponível')
@@ -90,10 +87,16 @@ while True:
                             quantidade = int(input(f'Informe uma quantidade ate {estoque_produtos[escolha-1]}'))
                         else:
                             break
-                estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
-                carrinho_produtos.append(escolha-1)
-                quantidade_produto.append(quantidade)
-                total_carrinho = total_carrinho + (precos_produtos[escolha-1]*quantidade)
+                print(carrinho_produtos.count(escolha-1))
+
+                if(carrinho_produtos.count(escolha-1)>=1):
+                    pos=carrinho_produtos.index(escolha-1)
+                    quantidade_produto[pos]=quantidade_produto[pos]+quantidade
+                else:
+                    estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
+                    carrinho_produtos.append(escolha-1)
+                    quantidade_produto.append(quantidade)
+                    
                 print(f'Subtotal de produtos e serviços: R${total_carrinho}')
             
             #Mostra a lista de serviços para o usuário   
@@ -129,7 +132,9 @@ while True:
                 if(len(carrinho_produtos)>0):
                     print('Produtos')
                     print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
+                    
                     for i in range(len(carrinho_produtos)):
+                            
                         print(i,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]]))
                 if(len(carrinho_servicos)>0):
                     print('Serviços')
@@ -166,9 +171,6 @@ while True:
                     print('Carrinho limpo')
                     opcao_menu2=0
                     
-                        
-                        
-                
                 
             elif(opcao_menu2==4):
                 if(len(carrinho_produtos)>0):
