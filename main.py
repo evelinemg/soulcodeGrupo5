@@ -16,6 +16,7 @@ cartao=[]
 cedulas=[50,20,10,5,2,1]
 troco=[]
 controle_pag=False
+
 #Inicialização
 print("*****Loja de Informática*****")
 print("---------------------------")
@@ -27,39 +28,49 @@ while True:
     while True:
         print("A. Acessar")
         print("F. Finalizar")
-        opcao_menu1=input("Digite A para acessar o sistema ou F para finalizar:\n")
+        opcao_menu1=input("\nDigite A para acessar o sistema ou F para finalizar:")
         opcao_menu1=opcao_menu1.upper()
+
+        #Controle de entrada inválida
         if(opcao_menu1=='A'or opcao_menu1=='F'):
             break
-    if(opcao_menu1=='F' and total_carrinho==0):
+
+    if(opcao_menu1=='F' and total_carrinho==0): #Saída do sistema e controle para que não saia sem pagar
         print('Obrigado pela visita!')
         break
-    elif(opcao_menu1=='F' and total_carrinho>0):
+    elif(opcao_menu1=='F' and total_carrinho>0): #Direciona para o pagamento se tiver débito
+        
         if(len(carrinho_produtos)>0):
             print('Produtos')
             print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
+            
             for i in range(len(carrinho_produtos)):
                 print(i,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]])) 
+        
         if(len(carrinho_servicos)>0):
             print('Serviços')
             print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
+            
             for i in range(len(carrinho_servicos)):
                 print(i+1,   '     -   ',servicos[carrinho_servicos[i]],'     -     ',quantidade_servico[i], '     -     ',precos_servicos[carrinho_servicos[i]], '     -     ', (quantidade_servico[i]*precos_servicos[carrinho_servicos[i]]))
-            if(controle_pag):
-                print(f'O total gasto foi: {total_carrinho}')
+            
+        if(controle_pag): #Exibe o que já foi pago
+            print(f'O total gasto foi: {total_carrinho}')
+            break
+        else: #Direciona para o pagamento
+            print('Os produtos listados acima estão pendente de pagamento')
+            opcao_menu1=input('Se você deseja voltar e concluir o pagamento digite A ou sair digite F: ')
+            opcao_menu1=opcao_menu1.upper()
+            
+            if(opcao_menu1=='F'): #Desistência: esvazia o carrinho e encerra o programa
+                carrinho_produtos=[]
+                quantidade_produto=[]
+                carrinho_servicos=[]
+                quantidade_servico=[]
+                total_carrinho=0.0
+                print('Carrinho vazio!')
                 break
-            else:
-                print('Os produtos listados acima estão pendente de pagamento')
-                opcao_menu1=input('Se você deseja voltar e concluir o pagamento digite A ou para sair digite F')
-                opcao_menu1=opcao_menu1.upper()
-                if(opcao_menu1=='F'):
-                    print("Obrigado pela visita")
-                    carrinho_produtos=[]
-                    quantidade_produto=[]
-                    carrinho_servicos=[]
-                    quantidade_servico=[]
-                    total_carrinho=0.0
-                    break
+
     #Menu 2
     while(opcao_menu1=='A'):
         
@@ -94,12 +105,12 @@ while True:
                 for i in range(tamanho_p):
                   print(f'{i+1}.{produtos[i]} - R${precos_produtos[i]}') #Mostra na tela os produtos listados e o preço de cada
                 
-                print('Para comprar um produto digite o númeo do índice correspondente ou 0 concluir')
+                print('Para comprar um produto digite o número do índice correspondente ou 0 concluir')
 
                 #Validação da escolha do produto
                 while True:
                     while True:
-                        escolha=int(input('Digite o número de sua escolha ou 0 para concluir: '))
+                        escolha=int(input('Digite o número de sua escolha: '))
                         if(escolha>=0 and escolha<=tamanho_p): 
                             break
 
@@ -111,36 +122,38 @@ while True:
                         opcao_menu2=0
                         break
                     else: #Entrada dos produtos selecionados (cálculo de preço e quantidade)
-                        quantidade=int(input('Informe a quantidade que quer do produto escolhido: '))
+                        quantidade=int(input('Informe a quantidade que deseja do produto escolhido: '))
 
                         
                         while True:
-                            if(carrinho_produtos.count(escolha-1)>=1):
-                                estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
+                            if(carrinho_produtos.count(escolha-1)>=1): #Atualização do estoque e carrinho com agrupamento de itens em comum
                                 pos1=carrinho_produtos.index(escolha-1)
                                 quantidade_produto[pos1]=quantidade_produto[pos1]+quantidade
+                                estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
                                 total_carrinho=total_carrinho+(precos_produtos[escolha-1]*quantidade)
                             else: #Atualização do estoque e carrinho
                                 estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
                                 carrinho_produtos.append(escolha-1)
                                 quantidade_produto.append(quantidade)
                                 total_carrinho=total_carrinho+(precos_produtos[escolha-1]*quantidade)
+                            
                             if(quantidade<=0):
                                 quantidade=int(input('Informe um valor maior que 0: '))
                             elif(quantidade>estoque_produtos[escolha-1]): #Controle de estoque
                                 print(f'A quantidade excedeu o estoque. Temos {estoque_produtos[escolha-1]} unidades desse produto')
-                                quantidade=int(input(f'Informe uma quantidade até {estoque_produtos[escolha-1]}'))
+                                quantidade=int(input(f'Informe uma quantidade até {estoque_produtos[escolha-1]} unidades'))
                             else:
                                 break
                     
                     print(f'Subtotal de produtos e serviços: R${total_carrinho}')
-                
                     
                 while True:
                     opcao_menu3=int(input('''
                     1. Deseja ir para a forma de pagamento
                     2. Limpar o carrinho
-                    3. Voltar'''))
+                    3. Voltar
+                    
+                    Digite a opção escolhida:'''))
                     
                     #Controle de entrada inválida
                     if(opcao_menu3>=1 or opcao_menu3<=3):
@@ -154,7 +167,7 @@ while True:
                     opcao_menu2=0
                 elif opcao_menu3==2: #Esvaziar o carrinho
                     while True:
-                        print('Você está desistindo da compra dos seguintes produtos')
+                        print('Você está desistindo da compra dos seguintes produtos:')
                         for i in range(len(carrinho_produtos)):
                             print(f'{produtos[carrinho_produtos[i]]}-{quantidade_produto[i]} un.')
                         while True:
@@ -221,7 +234,9 @@ while True:
                     opcao_menu3=int(input('''
                     1. Deseja ir para a forma de pagamento
                     2. Limpar o carrinho
-                    3. Voltar'''))
+                    3. Voltar
+                    
+                    Digite a opção escolhida:'''))
                     
                     #Controle de entrada inválida
                     if(opcao_menu3>=1 or opcao_menu3<=3):
@@ -285,7 +300,9 @@ while True:
                     opcao_menu3=int(input('''
                     1. Deseja ir para a forma de pagamento
                     2. Limpar o carrinho
-                    3. Voltar'''))
+                    3. Voltar
+                    
+                    Digite a opção escolhida:'''))
                     
                     #Controle de entrada inválida
                     if(opcao_menu3>=1 or opcao_menu3<=3):
@@ -352,17 +369,29 @@ while True:
                     print('Informe os dados do cartão:')
                     cartao=input("")
                     print('Pagamento efetuado com sucesso!')
+                    carrinho_produtos=[]
+                    quantidade_produto=[]
+                    carrinho_servicos=[]
+                    quantidade_servico=[]
+                    total_carrinho=0.0
                     controle_pag=True
-                    opcao_menu2=0
                 elif opcao_menu4 ==2:
                     print('Ecaneie o QRCode')
                     print('Pagamento efetuado com sucesso!')
-                    opcao_menu2=0
+                    carrinho_produtos=[]
+                    quantidade_produto=[]
+                    carrinho_servicos=[]
+                    quantidade_servico=[]
+                    total_carrinho=0.0
                     controle_pag=True
                 elif opcao_menu4 ==3: 
                     print('O codigo barras é XXXXXXXXXXXXX. Vecimento em: ')
+                    carrinho_produtos=[]
+                    quantidade_produto=[]
+                    carrinho_servicos=[]
+                    quantidade_servico=[]
+                    total_carrinho=0.0
                     controle_pag=True
-                    opcao_menu2=0
                 elif opcao_menu4 ==4:
                     
                     while True:
@@ -395,6 +424,11 @@ while True:
         
                             
                     print(f'O seu troco será {total_troco}, disponível em {a}')
+                    carrinho_produtos=[]
+                    quantidade_produto=[]
+                    carrinho_servicos=[]
+                    quantidade_servico=[]
+                    total_carrinho=0.0
                     controle_pag=True
                     opcao_menu2=0
                 elif opcao_menu4 ==5:
