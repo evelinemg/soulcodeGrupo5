@@ -40,22 +40,26 @@ while True:
             print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
             for i in range(len(carrinho_produtos)):
                 print(i,   '     -   ',produtos[carrinho_produtos[i]],'     -     ',quantidade_produto[i], '     -     ',precos_produtos[carrinho_produtos[i]], '     -     ', (quantidade_produto[i]*precos_produtos[carrinho_produtos[i]])) 
-            if(len(carrinho_servicos)>0):
-                print('Serviços')
-                print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
-                for i in range(len(carrinho_servicos)):
-                    print(i+1,   '     -   ',servicos[carrinho_servicos[i]],'     -     ',quantidade_servico[i], '     -     ',precos_servicos[carrinho_servicos[i]], '     -     ', (quantidade_servico[i]*precos_servicos[carrinho_servicos[i]]))
+        if(len(carrinho_servicos)>0):
+            print('Serviços')
+            print('nº    -      Produto        -   Qtd -   Valor Unitario   -   Valor Total')
+            for i in range(len(carrinho_servicos)):
+                print(i+1,   '     -   ',servicos[carrinho_servicos[i]],'     -     ',quantidade_servico[i], '     -     ',precos_servicos[carrinho_servicos[i]], '     -     ', (quantidade_servico[i]*precos_servicos[carrinho_servicos[i]]))
             if(controle_pag):
                 print(f'O total gasto foi: {total_carrinho}')
                 break
             else:
                 print('Os produtos listados acima estão pendente de pagamento')
-                opcao_menu1=input('Se você deseja voltar e concluir o pagamento digite A ou sair digite F')
+                opcao_menu1=input('Se você deseja voltar e concluir o pagamento digite A ou para sair digite F')
                 opcao_menu1=opcao_menu1.upper()
                 if(opcao_menu1=='F'):
+                    print("Obrigado pela visita")
                     carrinho_produtos=[]
+                    quantidade_produto=[]
+                    carrinho_servicos=[]
+                    quantidade_servico=[]
+                    total_carrinho=0.0
                     break
-
     #Menu 2
     while(opcao_menu1=='A'):
         
@@ -112,6 +116,7 @@ while True:
                         
                         while True:
                             if(carrinho_produtos.count(escolha-1)>=1):
+                                estoque_produtos[escolha-1]=estoque_produtos[escolha-1]-quantidade
                                 pos1=carrinho_produtos.index(escolha-1)
                                 quantidade_produto[pos1]=quantidade_produto[pos1]+quantidade
                                 total_carrinho=total_carrinho+(precos_produtos[escolha-1]*quantidade)
@@ -129,8 +134,6 @@ while True:
                                 break
                     
                     print(f'Subtotal de produtos e serviços: R${total_carrinho}')
-                            
-                    
                 
                     
                 while True:
@@ -350,13 +353,16 @@ while True:
                     cartao=input("")
                     print('Pagamento efetuado com sucesso!')
                     controle_pag=True
+                    opcao_menu2=0
                 elif opcao_menu4 ==2:
                     print('Ecaneie o QRCode')
                     print('Pagamento efetuado com sucesso!')
+                    opcao_menu2=0
                     controle_pag=True
                 elif opcao_menu4 ==3: 
                     print('O codigo barras é XXXXXXXXXXXXX. Vecimento em: ')
                     controle_pag=True
+                    opcao_menu2=0
                 elif opcao_menu4 ==4:
                     
                     while True:
